@@ -1,61 +1,84 @@
 
 # Magento 2 Store
 
-## Setup plugin
-- Run docker compose up
+## Setup Store
 
-    Go to http://localhost/admin
+- Create folders mariadb_data, magento_data and elasticsearch_data
+
+- Update file permisions:
+
     ```
-    Username: user
-    Password: bitnami1
+    sudo chmod -R 777 elasticsearch_data magento_data mariadb_data
     ```
+
+## Setup plugin
+
+- Run docker composer up
+
+- Run dc exec -it magento bash
+
+- Go to bitnami/magento/
 
 - Install the plugin:
     ```
     composer require apurata/financing:"0.4.*"
     ```
 
-- Update folder owner
-
-```
-sudo chown bitnami:andy -R vendor/apurata
-```
-
 - Clone the repo in the folder bitnami/magento/vendor/apurata
 
-```
-git clone https://github.com/apurata/magento2-acuotaz-payment-gateway financing
-```
+    ```
+    git clone https://github.com/apurata/magento2-acuotaz-payment-gateway financing
+    ```
+
+- Update folder owner
+
+    ```
+    sudo chown bitnami:andy -R vendor/apurata
+    ```
+
+- Update apurata host url, go to Apurata/Financing/Helper/ConfigData.php
+
+    ```
+    // Use apurata webserver docker container name
+    const APURATA_DOMAIN = 'http://tornado-server:8000';
+    ```
+
 
 ## Configure store
 
+- Go to http://localhost/admin
+    ```
+    Username: user
+    Password: bitnami1
+    ```
+
 - Activate payment method
-```
-Go to Stores -> Configuration -> Sales -> Payment Methods
+    ```
+    Go to Stores -> Configuration -> Sales -> Payment Methods
 
-Type client_id and token
+    Type client_id and token
 
-Save config
-```
+    Save config
+    ```
 
 - Add a product:
 
-```
-Go to Products Page -> New products
+    ```
+    Go to Catalog -> Products -> Add product
 
-Fill the required fields, it is important to set th Quantity value
+    Fill the required fields, it is important to set the Quantity value
 
-Click save button
-```
+    Click save button
+    ```
 
 > Note: The product is not shown in the home section, type it in the search engine
 
 - Update currency:
 
-```
-Go to Stores Page -> Settings/Configuration -> Currency Setup
+    ```
+    Go to Stores -> Configuration -> General -> Currency Setup
 
-Set Base Currency and Allowed Currencies to PEN
+    Set Base Currency and Allowed Currencies to PEN
 
-Click Save Config button
-```
+    Click Save Config button
+    ```
