@@ -55,6 +55,29 @@
     magento deploy:mode:set developer
     ```
 
+- Create the network:
+
+    ```
+    docker network create my_shared_network
+    ```
+
+- In the docker-compose of webserser add:
+
+    ```
+    networks:
+    my_shared_network:
+        external: true
+    ```
+
+- Connect tornado server and mongo to the network:
+
+    ```
+    tornado-server:
+        [...]
+        networks:
+        - my_shared_network
+    ```
+
 ## Configure store
 
 - Go to http://localhost:8080/admin
