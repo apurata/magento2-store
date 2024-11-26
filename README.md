@@ -24,6 +24,8 @@
     composer require apurata/financing:"0.4.*"
     ```
 
+- Get credentials from https://commercedeveloper.adobe.com/account/keys
+
 - Clone the repo in the folder bitnami/magento/vendor/apurata
 
     ```
@@ -33,7 +35,7 @@
 - Update folder owner
 
     ```
-    sudo chown bitnami:andy -R vendor/apurata
+    sudo chown myuser:root -R vendor/apurata
     ```
 
 - Update apurata host url, go to Apurata/Financing/Helper/ConfigData.php
@@ -43,6 +45,34 @@
     const APURATA_DOMAIN = 'http://tornado-server:8000';
     ```
 
+- Update deploy mode:
+
+    ```
+    magento deploy:mode:set developer
+    ```
+
+- Create the network:
+
+    ```
+    docker network create my_shared_network
+    ```
+
+- In the docker-compose of webserser add:
+
+    ```
+    networks:
+    my_shared_network:
+        external: true
+    ```
+
+- Connect tornado server and mongo to the network:
+
+    ```
+    tornado-server:
+        [...]
+        networks:
+        - my_shared_network
+    ```
 
 ## Configure store
 
