@@ -18,6 +18,7 @@ services:
       - '8080:8080'
       - '443:8443'
     environment:
+      - SENTRY_ENV=local
       - MAGENTO_HOST=localhost:8080
       - MAGENTO_DATABASE_HOST=mariadb
       - MAGENTO_DATABASE_PORT_NUMBER=3306
